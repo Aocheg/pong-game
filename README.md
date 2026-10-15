@@ -1,8 +1,8 @@
-# Neon Pong
+# Neon Pong.
 
 A classic arcade-style Pong game built with HTML, CSS, and JavaScript. It includes a neon visual theme, single-player AI mode, local multiplayer, touch controls, pause menu, score tracking, and sound effects.
 
-## Table of Contents
+## Table of Contents.
 
 - [Overview](#overview)
 - [How to Start the Game](#how-to-start-the-game)
@@ -31,7 +31,7 @@ This game gives players a simple but polished Pong experience:
 - Pause and restart menu flow
 - Scoreboard and win condition
 
-## How to Start the Game
+## How to Start the Game.
 
 There are a few easy ways to run the game:
 
@@ -245,7 +245,6 @@ const ballRadius = 9;
 This project is a polished version of the classic Pong game that is easy to launch, easy to understand, and fun to play both solo and with a friend. It is ideal for learning HTML canvas animation, collision detection, and simple game logic.
 
 If you want to improve the game further, you can add:
-
 - stronger AI behavior
 - power-ups
 - particles
