@@ -151,7 +151,7 @@ This is the main menu. It lets you:
 - view controls
 - start the game
 
-### Pause Screen
+### Pause Screen.
 
 Press `Space` while playing to pause.
 
@@ -160,7 +160,7 @@ From the pause menu you can:
 - Resume the match
 - Return to the main menu
 
-### Game Over Screen
+### Game Over Screen.
 
 When a player reaches 11 points:
 
@@ -168,7 +168,7 @@ When a player reaches 11 points:
 - final score is displayed
 - you can play again or return to the menu
 
-## Features
+## Features.
 
 - Neon arcade design
 - Responsive layout
@@ -180,7 +180,7 @@ When a player reaches 11 points:
 - Sound effects and mute toggle
 - Mouse, keyboard, and touch support
 
-## Troubleshooting
+## Troubleshooting.
 
 ### The game does not load
 - Make sure JavaScript is enabled.
