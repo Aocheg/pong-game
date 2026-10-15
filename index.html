@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Neon Pong</title>
   <style>
     :root {
@@ -27,6 +27,10 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      touch-action: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
       background:
         radial-gradient(circle at 50% 10%, rgba(126, 249, 255, 0.12), transparent 28%),
         radial-gradient(circle at 50% 100%, rgba(255, 95, 210, 0.10), transparent 35%),
@@ -83,6 +87,8 @@
       display: block;
       width: 100%;
       height: auto;
+      touch-action: none;
+      cursor: pointer;
       background:
         linear-gradient(180deg, rgba(11, 17, 35, 0.9), rgba(14, 25, 45, 0.95));
       border: 2px solid rgba(126, 249, 255, 0.28);
@@ -250,15 +256,14 @@
       text-transform: uppercase;
     }
 
-    .sound-toggle {
+    .sound-toggle, .pause-toggle {
       position: absolute;
       top: 12px;
-      right: 12px;
       width: 46px;
       height: 46px;
       border-radius: 50%;
       background: rgba(126, 249, 255, 0.08);
-      border: 1px solid rgba(126,249,255,0.35);
+      border: 1px solid rgba(126, 249, 255, 0.35);
       color: var(--white);
       display: grid;
       place-items: center;
@@ -266,11 +271,25 @@
       cursor: pointer;
       z-index: 15;
       transition: all 0.2s ease;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    .sound-toggle:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 18px rgba(126,249,255,0.25);
+    .sound-toggle {
+      right: 12px;
+    }
+
+    .pause-toggle {
+      left: 12px;
+      font-size: 1.15rem;
+    }
+
+    .sound-toggle:hover, .sound-toggle:active,
+    .pause-toggle:hover, .pause-toggle:active {
+      transform: scale(1.08);
+      background: rgba(126, 249, 255, 0.16);
+      box-shadow: 0 0 18px rgba(126, 249, 255, 0.3);
     }
 
     .sound-toggle.muted {
@@ -299,76 +318,144 @@
     }
 
     .touch-controls {
-      position: absolute;
-      inset: auto 12px 12px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: none;
-      z-index: 12;
-    }
-
-    .touch-pad {
-      pointer-events: auto;
-      width: 120px;
-      height: 120px;
-      border-radius: 24px;
-      background: rgba(126, 249, 255, 0.05);
-      border: 1px solid rgba(126, 249, 255, 0.2);
-      box-shadow: inset 0 0 16px rgba(126,249,255,0.05);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-      padding: 8px;
-    }
-
-    .touch-btn {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      color: var(--white);
-      font-size: 1.4rem;
-      font-weight: 900;
-      cursor: pointer;
-      user-select: none;
-      touch-action: manipulation;
-    }
-
-    .touch-btn:active {
-      transform: scale(0.96);
-      background: rgba(126, 249, 255, 0.12);
-    }
-
-    .hidden {
       display: none !important;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
+      body {
+        padding: 0;
+      }
+
       .game-shell {
-        width: min(96vw, 900px);
-        padding: 14px 12px 10px;
+        width: 100%;
+        max-width: 100vw;
+        padding: 10px 6px 6px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
       }
 
-      .touch-controls {
-        display: flex;
-      }
-
-      .mode-btn, .difficulty-btn {
-        min-width: 120px;
+      .scoreboard {
+        font-size: 2rem;
+        margin-bottom: 8px;
+        gap: 16px;
       }
 
       .modal {
-        padding: 24px 16px 16px;
+        width: min(94%, 480px);
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 20px 16px 16px;
       }
+
+      .brand {
+        font-size: clamp(2.2rem, 8vw, 3.2rem);
+      }
+
+      .subtitle {
+        margin: 6px 0 14px;
+      }
+
+      .mode-block, .difficulty-block {
+        margin: 10px 0 12px;
+      }
+
+      .mode-btn, .difficulty-btn {
+        min-width: 110px;
+        padding: 10px 12px;
+        font-size: 0.7rem;
+      }
+
+      .controls-panel {
+        margin-top: 12px;
+        padding: 12px 14px;
+      }
+
+      .controls-panel p {
+        font-size: 0.8rem;
+        margin: 5px 0;
+      }
+
+      .action-btn {
+        padding: 12px 18px;
+        margin-top: 12px;
+      }
+
+      .sound-toggle, .pause-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        top: 8px;
+      }
+
+      .sound-toggle { right: 8px; }
+      .pause-toggle { left: 8px; }
     }
 
-    @media (min-width: 701px) {
-      .touch-controls {
+    @media (max-height: 580px) {
+      .game-shell {
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        padding: 4px;
+        border: none;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+      }
+
+      .scoreboard {
+        font-size: 1.5rem;
+        margin-bottom: 2px;
+        gap: 12px;
+      }
+
+      #gameCanvas {
+        max-height: calc(100vh - 42px);
+        width: auto;
+        max-width: 100vw;
+      }
+
+      .modal {
+        max-height: 94vh;
+        padding: 12px 16px;
+        overflow-y: auto;
+      }
+
+      .brand {
+        font-size: 1.8rem;
+      }
+
+      .subtitle {
+        margin: 2px 0 8px;
+        font-size: 0.8rem;
+      }
+
+      .mode-block, .difficulty-block {
+        margin: 6px 0;
+      }
+
+      .controls-panel {
         display: none;
       }
+
+      .action-btn {
+        margin-top: 8px;
+        padding: 10px 16px;
+      }
+
+      .sound-toggle, .pause-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+        top: 6px;
+      }
+      .sound-toggle { right: 6px; }
+      .pause-toggle { left: 6px; }
     }
   </style>
 </head>
@@ -407,24 +494,25 @@
         <div class="controls-panel">
           <h3>Controls</h3>
           <div id="singleControls">
-            <p><strong>Mouse:</strong> Move left paddle</p>
-            <p><strong>↑ / ↓:</strong> Left paddle</p>
+            <p><strong>📱 Smartphone / Touch:</strong> Touch & drag paddle anywhere</p>
+            <p><strong>🖱️ Mouse:</strong> Move cursor up / down</p>
+            <p><strong>⌨️ Keyboard:</strong> ↑ / ↓ arrows or W / S</p>
           </div>
           <div id="multiControls" class="hidden">
-            <p><strong>Left:</strong> W / S</p>
-            <p><strong>Right:</strong> ↑ / ↓</p>
+            <p><strong>📱 Smartphone / Touch:</strong> Left half = P1, Right half = P2</p>
+            <p><strong>⌨️ Keyboard:</strong> W / S (Left), ↑ / ↓ (Right)</p>
           </div>
-          <p><strong>Space:</strong> Pause / Resume</p>
+          <p><strong>⏸ Pause:</strong> Tap ⏸ button or press Space</p>
         </div>
 
-        <button class="action-btn" id="startBtn">Press Any Key to Start</button>
+        <button class="action-btn" id="startBtn">START GAME</button>
       </div>
     </div>
 
     <div id="pauseScreen" class="overlay hidden">
       <div class="modal">
         <h1 class="brand" style="font-size: 2.5rem; letter-spacing: 0.14em;">Paused</h1>
-        <p class="subtitle">Press Space to resume</p>
+        <p class="subtitle">Tap Resume or press Space to continue</p>
         <button class="action-btn" id="resumeBtn">Resume</button>
         <button class="ghost-btn" id="menuBtn">Menu</button>
       </div>
@@ -439,21 +527,10 @@
       </div>
     </div>
 
+    <button id="pauseToggle" class="pause-toggle" aria-label="Pause game">⏸</button>
     <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">🔊</button>
 
     <div id="pauseIndicator" class="pause-indicator hidden">Paused</div>
-
-    <div class="touch-controls" aria-label="Touch controls">
-      <div class="touch-pad left-pad" aria-label="Left paddle touch controls">
-        <button class="touch-btn" data-touch="left-up">▲</button>
-        <button class="touch-btn" data-touch="left-down">▼</button>
-      </div>
-
-      <div class="touch-pad right-pad" aria-label="Right paddle touch controls">
-        <button class="touch-btn" data-touch="right-up">▲</button>
-        <button class="touch-btn" data-touch="right-down">▼</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -471,6 +548,7 @@
     const singleControls = document.getElementById("singleControls");
     const multiControls = document.getElementById("multiControls");
     const soundToggle = document.getElementById("soundToggle");
+    const pauseToggle = document.getElementById("pauseToggle");
 
     const startBtn = document.getElementById("startBtn");
     const resumeBtn = document.getElementById("resumeBtn");
@@ -500,13 +578,6 @@
       s: false
     };
 
-    const touchState = {
-      leftUp: false,
-      leftDown: false,
-      rightUp: false,
-      rightDown: false
-    };
-
     const leftPaddle = {
       x: 30,
       y: canvas.height / 2 - paddleHeight / 2,
@@ -519,7 +590,8 @@
       x: canvas.width - 30 - paddleWidth,
       y: canvas.height / 2 - paddleHeight / 2,
       width: paddleWidth,
-      height: paddleHeight
+      height: paddleHeight,
+      targetY: canvas.height / 2 - paddleHeight / 2
     };
 
     const score = {
@@ -542,12 +614,21 @@
 
     function initAudio() {
       if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          audioContext = new AudioCtx();
+        }
+      }
+      if (audioContext && audioContext.state === "suspended") {
+        audioContext.resume().catch(() => {});
       }
     }
 
     function playSound(freq = 600, duration = 0.08, type = "sine") {
       if (!soundEnabled || !audioContext) return;
+      if (audioContext.state === "suspended") {
+        audioContext.resume().catch(() => {});
+      }
 
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
@@ -626,10 +707,15 @@
       score.computer = 0;
       updateScoreboard();
       resetBall(1);
+      leftPaddle.y = canvas.height / 2 - paddleHeight / 2;
+      leftPaddle.targetY = leftPaddle.y;
+      rightPaddle.y = canvas.height / 2 - paddleHeight / 2;
+      rightPaddle.targetY = rightPaddle.y;
       gameState = "playing";
       pauseScreen.classList.add("hidden");
       gameOverScreen.classList.add("hidden");
       pauseIndicator.classList.add("hidden");
+      if (pauseToggle) pauseToggle.textContent = "⏸";
     }
 
     function endGame(playerWon) {
@@ -639,6 +725,8 @@
 
       title.textContent = playerWon ? "You Won!" : "Game Over!";
       msg.textContent = `Final Score: ${score.player} - ${score.computer}`;
+
+      if (pauseToggle) pauseToggle.textContent = "⏸";
 
       if (playerWon) playWin();
       else playGameOver();
@@ -653,58 +741,64 @@
         gameState = "paused";
         pauseScreen.classList.remove("hidden");
         pauseIndicator.classList.remove("hidden");
+        if (pauseToggle) pauseToggle.textContent = "▶";
       } else {
         gameState = "playing";
         pauseScreen.classList.add("hidden");
         pauseIndicator.classList.add("hidden");
+        if (pauseToggle) pauseToggle.textContent = "⏸";
       }
     }
 
     function moveLeftPaddle() {
       if (gameMode === "single") {
-        const keyboardMove = (keys.ArrowDown ? 1 : 0) - (keys.ArrowUp ? 1 : 0);
-        const touchMove = (touchState.leftDown ? 1 : 0) - (touchState.leftUp ? 1 : 0);
+        const keyboardMove = (keys.ArrowDown || keys.s ? 1 : 0) - (keys.ArrowUp || keys.w ? 1 : 0);
+        if (keyboardMove !== 0) {
+          leftPaddle.targetY += keyboardMove * paddleSpeed * 2;
+          leftPaddle.targetY = clamp(leftPaddle.targetY, 0, canvas.height - leftPaddle.height);
+        }
 
-        leftPaddle.targetY += (keyboardMove + touchMove) * paddleSpeed;
-
-        const center = leftPaddle.y + leftPaddle.height / 2;
-        const diff = leftPaddle.targetY - center;
-        leftPaddle.y += diff * 0.22;
-
-        leftPaddle.y += (keyboardMove + touchMove) * paddleSpeed * 0.7;
+        const diff = leftPaddle.targetY - leftPaddle.y;
+        leftPaddle.y += diff * 0.45;
         leftPaddle.y = clamp(leftPaddle.y, 0, canvas.height - leftPaddle.height);
-        leftPaddle.targetY = clamp(leftPaddle.targetY, 0, canvas.height - leftPaddle.height);
       } else {
         const keyboardMove = (keys.s ? 1 : 0) - (keys.w ? 1 : 0);
-        const touchMove = (touchState.leftDown ? 1 : 0) - (touchState.leftUp ? 1 : 0);
-        const move = keyboardMove + touchMove;
+        if (keyboardMove !== 0) {
+          leftPaddle.targetY += keyboardMove * paddleSpeed * 2;
+          leftPaddle.targetY = clamp(leftPaddle.targetY, 0, canvas.height - leftPaddle.height);
+        }
 
-        leftPaddle.y += move * paddleSpeed;
+        const diff = leftPaddle.targetY - leftPaddle.y;
+        leftPaddle.y += diff * 0.45;
         leftPaddle.y = clamp(leftPaddle.y, 0, canvas.height - leftPaddle.height);
       }
     }
 
     function updateRightPaddle() {
       if (gameMode === "single") {
-        const diffMap = { easy: 0.04, medium: 0.08, hard: 0.12 };
-        const aiSpeed = diffMap[difficulty] || 0.08;
+        const diffMap = { easy: 0.05, medium: 0.09, hard: 0.14 };
+        const aiSpeed = diffMap[difficulty] || 0.09;
 
         let targetY = ball.y - rightPaddle.height / 2;
 
         if (difficulty === "easy") {
-          targetY += (Math.random() - 0.5) * 90;
+          targetY += (Math.random() - 0.5) * 80;
         } else if (difficulty === "medium") {
-          targetY += (Math.random() - 0.5) * 32;
+          targetY += (Math.random() - 0.5) * 28;
         }
 
         rightPaddle.y += (targetY - rightPaddle.y) * aiSpeed;
         rightPaddle.y = clamp(rightPaddle.y, 0, canvas.height - rightPaddle.height);
+        rightPaddle.targetY = rightPaddle.y;
       } else {
         const keyboardMove = (keys.ArrowDown ? 1 : 0) - (keys.ArrowUp ? 1 : 0);
-        const touchMove = (touchState.rightDown ? 1 : 0) - (touchState.rightUp ? 1 : 0);
-        const move = keyboardMove + touchMove;
+        if (keyboardMove !== 0) {
+          rightPaddle.targetY += keyboardMove * paddleSpeed * 2;
+          rightPaddle.targetY = clamp(rightPaddle.targetY, 0, canvas.height - rightPaddle.height);
+        }
 
-        rightPaddle.y += move * paddleSpeed;
+        const diff = rightPaddle.targetY - rightPaddle.y;
+        rightPaddle.y += diff * 0.45;
         rightPaddle.y = clamp(rightPaddle.y, 0, canvas.height - rightPaddle.height);
       }
     }
@@ -881,11 +975,69 @@
     window.addEventListener("keydown", (event) => handleKeyChange(event, true));
     window.addEventListener("keyup", (event) => handleKeyChange(event, false));
 
-    canvas.addEventListener("mousemove", (event) => {
-      if (gameMode !== "single") return;
+    // Touch controls for smartphone / tablets
+    function processTouchInput(touches) {
+      if (gameState !== "playing") return;
       const rect = canvas.getBoundingClientRect();
+
+      for (let i = 0; i < touches.length; i++) {
+        const touch = touches[i];
+        if (touch.target === pauseToggle || touch.target === soundToggle) continue;
+
+        const canvasX = ((touch.clientX - rect.left) / rect.width) * canvas.width;
+        const canvasY = ((touch.clientY - rect.top) / rect.height) * canvas.height;
+
+        if (gameMode === "single") {
+          leftPaddle.targetY = clamp(canvasY - leftPaddle.height / 2, 0, canvas.height - leftPaddle.height);
+        } else {
+          if (canvasX < canvas.width / 2) {
+            leftPaddle.targetY = clamp(canvasY - leftPaddle.height / 2, 0, canvas.height - leftPaddle.height);
+          } else {
+            rightPaddle.targetY = clamp(canvasY - rightPaddle.height / 2, 0, canvas.height - rightPaddle.height);
+          }
+        }
+      }
+    }
+
+    const onTouchStart = (e) => {
+      if (gameState === "playing") {
+        if (e.target !== pauseToggle && e.target !== soundToggle) {
+          e.preventDefault();
+        }
+        initAudio();
+        processTouchInput(e.touches);
+      }
+    };
+
+    const onTouchMove = (e) => {
+      if (gameState === "playing") {
+        if (e.target !== pauseToggle && e.target !== soundToggle) {
+          e.preventDefault();
+        }
+        processTouchInput(e.touches);
+      }
+    };
+
+    canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+    canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+    // Mouse controls for desktop
+    canvas.addEventListener("mousemove", (event) => {
+      if (gameState !== "playing") return;
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = ((event.clientX - rect.left) / rect.width) * canvas.width;
       const mouseY = ((event.clientY - rect.top) / rect.height) * canvas.height;
-      leftPaddle.targetY = mouseY - leftPaddle.height / 2;
+
+      if (gameMode === "single") {
+        leftPaddle.targetY = clamp(mouseY - leftPaddle.height / 2, 0, canvas.height - leftPaddle.height);
+      } else {
+        if (mouseX < canvas.width / 2) {
+          leftPaddle.targetY = clamp(mouseY - leftPaddle.height / 2, 0, canvas.height - leftPaddle.height);
+        } else {
+          rightPaddle.targetY = clamp(mouseY - rightPaddle.height / 2, 0, canvas.height - rightPaddle.height);
+        }
+      }
     });
 
     startBtn.addEventListener("click", () => {
@@ -899,11 +1051,18 @@
       togglePause();
     });
 
+    pauseToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      initAudio();
+      togglePause();
+    });
+
     menuBtn.addEventListener("click", () => {
       gameState = "menu";
       pauseScreen.classList.add("hidden");
       titleScreen.classList.remove("hidden");
       pauseIndicator.classList.add("hidden");
+      if (pauseToggle) pauseToggle.textContent = "⏸";
     });
 
     restartBtn.addEventListener("click", () => {
@@ -916,6 +1075,7 @@
       gameOverScreen.classList.add("hidden");
       titleScreen.classList.remove("hidden");
       gameState = "menu";
+      if (pauseToggle) pauseToggle.textContent = "⏸";
     });
 
     modeButtons.forEach(button => {
@@ -931,31 +1091,6 @@
       soundToggle.classList.toggle("muted", !soundEnabled);
       soundToggle.textContent = soundEnabled ? "🔊" : "🔇";
       if (soundEnabled) initAudio();
-    });
-
-    document.querySelectorAll(".touch-btn").forEach(btn => {
-      const action = btn.dataset.touch;
-
-      const press = (e) => {
-        e.preventDefault();
-        if (action === "left-up") touchState.leftUp = true;
-        if (action === "left-down") touchState.leftDown = true;
-        if (action === "right-up") touchState.rightUp = true;
-        if (action === "right-down") touchState.rightDown = true;
-      };
-
-      const release = () => {
-        if (action === "left-up") touchState.leftUp = false;
-        if (action === "left-down") touchState.leftDown = false;
-        if (action === "right-up") touchState.rightUp = false;
-        if (action === "right-down") touchState.rightDown = false;
-      };
-
-      btn.addEventListener("touchstart", press, { passive: false });
-      btn.addEventListener("touchend", release);
-      btn.addEventListener("mousedown", press);
-      btn.addEventListener("mouseup", release);
-      btn.addEventListener("mouseleave", release);
     });
 
     updateScoreboard();

@@ -21,10 +21,12 @@ A classic arcade-style Pong game built with HTML, CSS, and JavaScript. It includ
 This game gives players a simple but polished Pong experience:
 
 - One-player mode against a computer opponent
-- Two-player local mode on the same keyboard
-- Mouse control for the left paddle in single-player mode
-- Keyboard controls for both players
-- Mobile touch controls
+- Two-player local mode on the same device (multi-touch & keyboard support)
+- Direct touch-and-drag hand controls on smartphones and tablets (no mouse needed)
+- Mouse control for paddles on desktop
+- Keyboard controls for both players (W/S and Arrow keys)
+- Responsive layout adapting to smartphone portrait and landscape modes
+- On-screen touch buttons for pause/resume (⏸) and sound (🔊)
 - Ball trail effects and arcade neon visuals
 - Pause and restart menu flow
 - Scoreboard and win condition
@@ -35,24 +37,21 @@ There are a few easy ways to run the game:
 
 ### Option 1: Open the HTML File Directly
 1. Download or clone the repository.
-2. Open the `game.html` file in a browser.
+2. Open the `index.html` file in any modern web browser (Chrome, Safari, Firefox, Edge).
 3. The game will load immediately.
 
-### Option 2: Run a Local Web Server
-This is recommended for a smoother experience and to avoid browser restrictions.
+### Option 2: Run a Local Web Server (Play on Smartphone via Wi-Fi)
+Running a local web server allows you to test or play the game on your smartphone over your local Wi-Fi network:
 
 Using Python:
 
 ```bash
 cd pong-game
-python -m http.server 8000
+python3 -m http.server 8000
 ```
 
-Then open:
-
-```text
-http://localhost:8000
-```
+- On your computer: open `http://localhost:8000`
+- On your smartphone (connected to the same Wi-Fi): open `http://<your-computer-ip>:8000`
 
 Using Node.js:
 
@@ -61,49 +60,60 @@ cd pong-game
 npx http-server
 ```
 
-Then open the local URL shown in the terminal.
+### Option 3: Play Online via GitHub Pages
+1. Go to repository **Settings** > **Pages** on GitHub.
+2. Under **Source**, choose `Deploy from a branch` and select `main` (root).
+3. Open the published link on your mobile phone browser to play anywhere.
 
 ## How to Play
 
-1. Open the game in your browser.
+1. Open the game in your browser or smartphone.
 2. The title screen appears.
 3. Choose your game mode:
-   - `vs CPU` for single-player
-   - `2 Players` for local multiplayer
+   - `vs CPU` for single-player against AI
+   - `2 Players` for local two-player duel on the same screen
 4. If you selected single-player, pick a difficulty:
    - Easy
    - Medium
    - Hard
-5. Press any key or click the start button to begin.
+5. Tap **START GAME** (or press Space / click start).
 6. Keep the ball in play and score points by making the opponent miss it.
-7. First player to 11 points wins.
+7. First player to 11 points wins!
 
 ## Controls
 
-### Single Player Mode
+### 📱 Smartphone & Tablet Controls (Hand / Finger Play)
+
+| Mode | Gesture / Touch | Action |
+|------|-----------------|--------|
+| **Single Player (vs CPU)** | Touch & drag finger anywhere | Paddle smoothly follows your finger vertically |
+| **2 Players (Local)** | Left half of screen | Player 1 paddle |
+| **2 Players (Local)** | Right half of screen | Player 2 paddle (multi-touch supported) |
+| **Any mode** | Tap ⏸ button (top-left) | Pause / Resume game |
+| **Any mode** | Tap 🔊 button (top-right) | Toggle sound effects on/off |
+
+> **Mobile Tip:** Turn your smartphone sideways (landscape) for the classic full-screen arcade experience! Accidental page scrolling, zoom, and text selection are locked during gameplay.
+
+### 💻 Desktop Controls (Mouse & Keyboard)
+
+#### Single Player Mode
 
 | Control | Action |
 |---------|--------|
-| 🖱️ Mouse | Move the left paddle up and down |
-| ↑ / ↓ Arrow Keys | Move left paddle |
+| 🖱️ Mouse | Move cursor up / down to guide the paddle |
+| ↑ / ↓ or W / S | Move left paddle with keyboard |
 | Space | Pause or resume |
-| 🔊 Sound button | Toggle sound |
+| ⏸ button | Pause or resume |
+| 🔊 Sound button | Toggle sound effects |
 
-### Multiplayer Mode
+#### Multiplayer Mode
 
 | Player | Input | Action |
 |--------|-------|--------|
-| Left player | W / S | Move paddle up/down |
-| Right player | Up Arrow / Down Arrow | Move paddle up/down |
-| Both players | Space | Pause or resume |
-| Both players | Sound button | Toggle sound |
-
-### Mobile Controls
-
-On smaller screens, touch controls appear at the bottom of the game area:
-
-- Left touch pad: controls the left paddle
-- Right touch pad: controls the right paddle
+| Left player | W / S | Move paddle up / down |
+| Right player | Up Arrow / Down Arrow | Move paddle up / down |
+| Both players | Touch / Mouse | Left half = P1, Right half = P2 |
+| Both players | Space or ⏸ button | Pause or resume |
 
 ## Game Modes
 
