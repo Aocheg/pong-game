@@ -256,7 +256,7 @@
       text-transform: uppercase;
     }
 
-    .sound-toggle, .pause-toggle {
+    .sound-toggle, .pause-toggle, .fullscreen-toggle {
       position: absolute;
       top: 12px;
       width: 46px;
@@ -280,12 +280,18 @@
       right: 12px;
     }
 
+    .fullscreen-toggle {
+      right: 68px;
+      font-size: 1.15rem;
+    }
+
     .pause-toggle {
       left: 12px;
       font-size: 1.15rem;
     }
 
     .sound-toggle:hover, .sound-toggle:active,
+    .fullscreen-toggle:hover, .fullscreen-toggle:active,
     .pause-toggle:hover, .pause-toggle:active {
       transform: scale(1.08);
       background: rgba(126, 249, 255, 0.16);
@@ -294,6 +300,87 @@
 
     .sound-toggle.muted {
       opacity: 0.6;
+    }
+
+    .rally-pill {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: -6px auto 10px;
+      padding: 4px 14px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(255, 219, 92, 0.08);
+      border: 1px solid rgba(255, 219, 92, 0.28);
+      color: var(--yellow);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(255, 219, 92, 0.12);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .rally-pill.pulse {
+      transform: scale(1.18);
+      background: rgba(255, 219, 92, 0.28);
+      box-shadow: 0 0 20px rgba(255, 219, 92, 0.45);
+      color: #fff;
+    }
+
+    .rally-pill .sep {
+      opacity: 0.5;
+    }
+
+    .target-score-block {
+      margin: 14px 0 16px;
+      text-align: center;
+    }
+
+    .target-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .target-btn {
+      appearance: none;
+      border: none;
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      background: rgba(126, 249, 255, 0.06);
+      border: 1px solid rgba(126, 249, 255, 0.26);
+      color: var(--white);
+      min-width: 76px;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      transition: all 0.18s ease;
+    }
+
+    .target-btn.active {
+      background: linear-gradient(135deg, var(--yellow), #ffe785);
+      color: #071423;
+      border-color: var(--yellow);
+      box-shadow: 0 0 18px rgba(255, 219, 92, 0.4);
+    }
+
+    .target-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .stats-summary {
+      margin-top: 14px;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      color: rgba(234, 250, 255, 0.75);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .pause-indicator {
@@ -338,8 +425,14 @@
 
       .scoreboard {
         font-size: 2rem;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         gap: 16px;
+      }
+
+      .rally-pill {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+        margin-bottom: 6px;
       }
 
       .modal {
@@ -357,7 +450,7 @@
         margin: 6px 0 14px;
       }
 
-      .mode-block, .difficulty-block {
+      .mode-block, .difficulty-block, .target-score-block {
         margin: 10px 0 12px;
       }
 
@@ -365,6 +458,12 @@
         min-width: 110px;
         padding: 10px 12px;
         font-size: 0.7rem;
+      }
+
+      .target-btn {
+        min-width: 68px;
+        padding: 8px 10px;
+        font-size: 0.68rem;
       }
 
       .controls-panel {
@@ -382,7 +481,7 @@
         margin-top: 12px;
       }
 
-      .sound-toggle, .pause-toggle {
+      .sound-toggle, .pause-toggle, .fullscreen-toggle {
         width: 40px;
         height: 40px;
         font-size: 1rem;
@@ -390,6 +489,7 @@
       }
 
       .sound-toggle { right: 8px; }
+      .fullscreen-toggle { right: 54px; }
       .pause-toggle { left: 8px; }
     }
 
@@ -414,6 +514,10 @@
         gap: 12px;
       }
 
+      .rally-pill {
+        display: none;
+      }
+
       #gameCanvas {
         max-height: calc(100vh - 42px);
         width: auto;
@@ -435,7 +539,7 @@
         font-size: 0.8rem;
       }
 
-      .mode-block, .difficulty-block {
+      .mode-block, .difficulty-block, .target-score-block {
         margin: 6px 0;
       }
 
@@ -448,13 +552,14 @@
         padding: 10px 16px;
       }
 
-      .sound-toggle, .pause-toggle {
+      .sound-toggle, .pause-toggle, .fullscreen-toggle {
         width: 36px;
         height: 36px;
         font-size: 0.9rem;
         top: 6px;
       }
       .sound-toggle { right: 6px; }
+      .fullscreen-toggle { right: 46px; }
       .pause-toggle { left: 6px; }
     }
   </style>
@@ -465,6 +570,12 @@
       <span class="player" id="player-score">0</span>
       <span class="divider">:</span>
       <span class="computer" id="computer-score">0</span>
+    </div>
+
+    <div class="rally-pill" id="rallyPill">
+      <span>RALLY <b id="rallyCount">0</b></span>
+      <span class="sep">•</span>
+      <span>BEST <b id="bestRally">0</b></span>
     </div>
 
     <canvas id="gameCanvas" width="960" height="540" aria-label="Pong game area"></canvas>
@@ -491,6 +602,15 @@
           </div>
         </div>
 
+        <div class="target-score-block">
+          <p class="section-label">Target Score</p>
+          <div class="target-buttons">
+            <button class="target-btn" data-score="5">5 pts</button>
+            <button class="target-btn active" data-score="11">11 pts</button>
+            <button class="target-btn" data-score="21">21 pts</button>
+          </div>
+        </div>
+
         <div class="controls-panel">
           <h3>Controls</h3>
           <div id="singleControls">
@@ -506,6 +626,12 @@
         </div>
 
         <button class="action-btn" id="startBtn">START GAME</button>
+
+        <div class="stats-summary" id="statsSummary">
+          <span id="statBestRally">🔥 Best Rally: 0</span>
+          <span>•</span>
+          <span id="statRecord">🏆 Wins: 0 | Losses: 0</span>
+        </div>
       </div>
     </div>
 
@@ -522,12 +648,14 @@
       <div class="modal">
         <h1 class="brand" id="gameOverTitle" style="font-size: 2.6rem; letter-spacing: 0.12em;">You Won!</h1>
         <p class="subtitle" id="gameOverMessage">Final Score: 11 - 8</p>
+        <p class="stat-highlight" id="gameOverStats" style="color: var(--yellow); font-size: 0.82rem; margin: -6px 0 14px; letter-spacing: 0.1em;"></p>
         <button class="action-btn" id="restartBtn">Play Again</button>
         <button class="ghost-btn" id="mainMenuBtn">Main Menu</button>
       </div>
     </div>
 
     <button id="pauseToggle" class="pause-toggle" aria-label="Pause game">⏸</button>
+    <button id="fullscreenToggle" class="fullscreen-toggle" aria-label="Toggle fullscreen">⛶</button>
     <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound">🔊</button>
 
     <div id="pauseIndicator" class="pause-indicator hidden">Paused</div>
@@ -539,6 +667,9 @@
 
     const playerScoreEl = document.getElementById("player-score");
     const computerScoreEl = document.getElementById("computer-score");
+    const rallyPill = document.getElementById("rallyPill");
+    const rallyCountEl = document.getElementById("rallyCount");
+    const bestRallyEl = document.getElementById("bestRally");
 
     const titleScreen = document.getElementById("titleScreen");
     const pauseScreen = document.getElementById("pauseScreen");
@@ -549,6 +680,7 @@
     const multiControls = document.getElementById("multiControls");
     const soundToggle = document.getElementById("soundToggle");
     const pauseToggle = document.getElementById("pauseToggle");
+    const fullscreenToggle = document.getElementById("fullscreenToggle");
 
     const startBtn = document.getElementById("startBtn");
     const resumeBtn = document.getElementById("resumeBtn");
@@ -558,18 +690,117 @@
 
     const modeButtons = [...document.querySelectorAll(".mode-btn")];
     const difficultyButtons = [...document.querySelectorAll(".difficulty-btn")];
+    const targetButtons = [...document.querySelectorAll(".target-btn")];
 
-    const winScore = 11;
+    const statBestRally = document.getElementById("statBestRally");
+    const statRecord = document.getElementById("statRecord");
+    const gameOverStats = document.getElementById("gameOverStats");
+
     const paddleWidth = 18;
     const paddleHeight = 120;
     const ballRadius = 9;
     const paddleSpeed = 7.2;
 
+    let winScore = 11;
     let gameMode = "single";
     let difficulty = "medium";
     let soundEnabled = true;
     let gameState = "menu";
     let audioContext = null;
+
+    let rallyCount = 0;
+    let screenShake = 0;
+    let serveCountdown = 0;
+    let serveDirection = 1;
+    const particles = [];
+
+    // Local Storage persistent stats
+    const STATS_KEY = "neon_pong_stats_v2";
+    function loadStats() {
+      try {
+        const raw = localStorage.getItem(STATS_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      return { bestRally: 0, wins: 0, losses: 0 };
+    }
+
+    const stats = loadStats();
+
+    function saveStats() {
+      try {
+        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+      } catch (_) {}
+      updateStatsDisplay();
+    }
+
+    function updateStatsDisplay() {
+      if (statBestRally) statBestRally.textContent = `🔥 Best Rally: ${stats.bestRally}`;
+      if (statRecord) statRecord.textContent = `🏆 Wins: ${stats.wins} | Losses: ${stats.losses}`;
+      if (bestRallyEl) bestRallyEl.textContent = stats.bestRally;
+    }
+
+    function updateRallyDisplay() {
+      if (rallyCountEl) rallyCountEl.textContent = rallyCount;
+      if (bestRallyEl) bestRallyEl.textContent = stats.bestRally;
+      if (rallyPill) {
+        rallyPill.classList.add("pulse");
+        setTimeout(() => rallyPill.classList.remove("pulse"), 160);
+      }
+    }
+
+    // Haptics for mobile devices
+    function triggerHaptic(pattern = 15) {
+      if (navigator.vibrate) {
+        try {
+          navigator.vibrate(pattern);
+        } catch (_) {}
+      }
+    }
+
+    // Screen Shake
+    function triggerShake(intensity = 4) {
+      screenShake = Math.max(screenShake, intensity);
+    }
+
+    // Particles
+    function createSparks(x, y, color, count = 12, speed = 4) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = (Math.random() * 0.7 + 0.3) * speed;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity,
+          color,
+          alpha: 1,
+          size: Math.random() * 3 + 2,
+          decay: Math.random() * 0.032 + 0.02
+        });
+      }
+    }
+
+    function updateAndDrawParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+        ctx.save();
+        ctx.globalAlpha = Math.max(p.alpha, 0);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
 
     const keys = {
       ArrowUp: false,
@@ -604,8 +835,8 @@
       x: canvas.width / 2,
       y: canvas.height / 2,
       radius: ballRadius,
-      speedX: 5,
-      speedY: 3.5
+      speedX: 0,
+      speedY: 0
     };
 
     function clamp(value, min, max) {
@@ -646,8 +877,8 @@
       osc.stop(audioContext.currentTime + duration);
     }
 
-    function playPaddleHit() { playSound(620, 0.08, "square"); }
-    function playWallHit() { playSound(450, 0.10, "triangle"); }
+    function playPaddleHit(pitch = 620) { playSound(pitch, 0.08, "square"); }
+    function playWallHit() { playSound(450, 0.09, "triangle"); }
     function playScore() {
       playSound(760, 0.08, "sine");
       setTimeout(() => playSound(960, 0.08, "sine"), 40);
@@ -670,16 +901,23 @@
     function resetBall(direction = 1) {
       ball.x = canvas.width / 2;
       ball.y = canvas.height / 2;
-
-      const baseSpeed = 5;
-      ball.speedX = direction * (baseSpeed + Math.random() * 1.8);
-      ball.speedY = (Math.random() * 4 - 2) * 1.5;
-
-      if (Math.abs(ball.speedY) < 1.5) {
-        ball.speedY = 1.5 * (Math.random() < 0.5 ? -1 : 1);
-      }
-
+      ball.speedX = 0;
+      ball.speedY = 0;
+      serveDirection = direction;
+      serveCountdown = 45; // ~0.75 second serve pause
+      rallyCount = 0;
+      updateRallyDisplay();
       trail.length = 0;
+    }
+
+    function launchBall() {
+      const baseSpeed = 5.2;
+      ball.speedX = serveDirection * (baseSpeed + Math.random() * 1.5);
+      ball.speedY = (Math.random() * 3.6 - 1.8);
+      if (Math.abs(ball.speedY) < 1.4) {
+        ball.speedY = 1.4 * (Math.random() < 0.5 ? -1 : 1);
+      }
+      playSound(540, 0.06, "triangle");
     }
 
     function setGameMode(mode) {
@@ -706,7 +944,6 @@
       score.player = 0;
       score.computer = 0;
       updateScoreboard();
-      resetBall(1);
       leftPaddle.y = canvas.height / 2 - paddleHeight / 2;
       leftPaddle.targetY = leftPaddle.y;
       rightPaddle.y = canvas.height / 2 - paddleHeight / 2;
@@ -716,6 +953,7 @@
       gameOverScreen.classList.add("hidden");
       pauseIndicator.classList.add("hidden");
       if (pauseToggle) pauseToggle.textContent = "⏸";
+      resetBall(1);
     }
 
     function endGame(playerWon) {
@@ -723,8 +961,20 @@
       const title = document.getElementById("gameOverTitle");
       const msg = document.getElementById("gameOverMessage");
 
-      title.textContent = playerWon ? "You Won!" : "Game Over!";
+      if (gameMode === "single") {
+        if (playerWon) stats.wins++;
+        else stats.losses++;
+        saveStats();
+      }
+
+      title.textContent = playerWon ? "You Won!" : (gameMode === "single" ? "Game Over!" : "Player 2 Won!");
       msg.textContent = `Final Score: ${score.player} - ${score.computer}`;
+      if (gameOverStats) {
+        gameOverStats.textContent = `Match Rally: ${rallyCount} • Best Streak: ${stats.bestRally}`;
+      }
+
+      triggerShake(10);
+      triggerHaptic([60, 50, 80, 50, 120]);
 
       if (pauseToggle) pauseToggle.textContent = "⏸";
 
@@ -807,12 +1057,18 @@
       if (ball.y - ball.radius <= 0) {
         ball.y = ball.radius;
         ball.speedY *= -1;
+        triggerShake(1.5);
+        triggerHaptic(10);
+        createSparks(ball.x, ball.y, "#ffdb5c", 8, 3.5);
         playWallHit();
       }
 
       if (ball.y + ball.radius >= canvas.height) {
         ball.y = canvas.height - ball.radius;
         ball.speedY *= -1;
+        triggerShake(1.5);
+        triggerHaptic(10);
+        createSparks(ball.x, ball.y, "#ffdb5c", 8, 3.5);
         playWallHit();
       }
     }
@@ -835,21 +1091,43 @@
       if (isLeft) ball.x = paddle.x + paddle.width + ball.radius;
       else ball.x = paddle.x - ball.radius;
 
-      const speedBoost = 1.08;
-      const angle = bounce * 5.5;
+      rallyCount++;
+      if (rallyCount > stats.bestRally) {
+        stats.bestRally = rallyCount;
+        saveStats();
+      }
+      updateRallyDisplay();
+
+      // Shake & Haptic
+      triggerShake(Math.min(2 + rallyCount * 0.35, 7));
+      triggerHaptic(18);
+
+      // Sparks
+      const sparkColor = isLeft ? "#7ef9ff" : "#ff5fd2";
+      const sparkX = isLeft ? paddle.x + paddle.width : paddle.x;
+      createSparks(sparkX, ball.y, sparkColor, 14 + Math.min(rallyCount, 12), 4.5);
+
+      // Speed progression (capped at 14 to prevent tunneling)
+      const currentSpeed = Math.hypot(ball.speedX, ball.speedY);
+      const maxSpeed = 13.5;
+      const speedBoost = currentSpeed < maxSpeed ? 1.045 : 1.01;
+      const angle = bounce * 5.6;
 
       ball.speedX = (isLeft ? 1 : -1) * (Math.abs(ball.speedX) * speedBoost);
-      ball.speedY = angle + ball.speedY * 0.7;
+      ball.speedY = angle + ball.speedY * 0.65;
 
-      playPaddleHit();
+      // Dynamic rising pitch for combo excitement
+      const hitPitch = Math.min(600 + rallyCount * 22, 1150);
+      playPaddleHit(hitPitch);
     }
 
     function updateBall() {
       ball.x += ball.speedX;
       ball.y += ball.speedY;
 
+      const maxTrail = Math.min(18 + rallyCount * 2, 34);
       trail.push({ x: ball.x, y: ball.y, alpha: 1 });
-      if (trail.length > 18) trail.shift();
+      if (trail.length > maxTrail) trail.shift();
 
       trail.forEach((p, idx) => {
         p.alpha = idx / trail.length;
@@ -871,6 +1149,9 @@
 
       if (ball.x - ball.radius < 0) {
         score.computer += 1;
+        triggerShake(8);
+        triggerHaptic([35, 40, 50]);
+        createSparks(ball.x, ball.y, "#ff5fd2", 30, 6.5);
         playScore();
         updateScoreboard();
 
@@ -883,6 +1164,9 @@
 
       if (ball.x + ball.radius > canvas.width) {
         score.player += 1;
+        triggerShake(8);
+        triggerHaptic([35, 40, 50]);
+        createSparks(ball.x, ball.y, "#7ef9ff", 30, 6.5);
         playScore();
         updateScoreboard();
 
@@ -932,20 +1216,67 @@
     }
 
     function render() {
+      ctx.save();
+      if (screenShake > 0) {
+        const offsetX = (Math.random() - 0.5) * screenShake * 2;
+        const offsetY = (Math.random() - 0.5) * screenShake * 2;
+        ctx.translate(offsetX, offsetY);
+        screenShake *= 0.85;
+        if (screenShake < 0.2) screenShake = 0;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawCenterLine();
+      updateAndDrawParticles();
       drawTrail();
       drawPaddle(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height, "#7ef9ff");
       drawPaddle(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height, "#ff5fd2");
       drawBall();
+
+      // 2-Player Area Labels in multiplayer mode
+      if (gameMode === "multiplayer") {
+        ctx.save();
+        ctx.font = "bold 13px 'Segoe UI', sans-serif";
+        ctx.letterSpacing = "0.14em";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "rgba(126, 249, 255, 0.22)";
+        ctx.fillText("PLAYER 1 AREA", canvas.width * 0.25, 36);
+        ctx.fillStyle = "rgba(255, 95, 210, 0.22)";
+        ctx.fillText("PLAYER 2 AREA", canvas.width * 0.75, 36);
+        ctx.restore();
+      }
+
+      // Serve Countdown prompt
+      if (serveCountdown > 0 && gameState === "playing") {
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "900 32px 'Segoe UI', sans-serif";
+        ctx.fillStyle = "#ffdb5c";
+        ctx.shadowColor = "rgba(255, 219, 92, 0.85)";
+        ctx.shadowBlur = 18;
+        const label = serveCountdown > 22 ? "READY..." : "SERVE!";
+        ctx.fillText(label, canvas.width / 2, canvas.height / 2 - 46);
+        ctx.restore();
+      }
+
+      ctx.restore();
     }
 
     function gameLoop() {
       if (gameState === "playing") {
         moveLeftPaddle();
         updateRightPaddle();
-        updateBall();
+
+        if (serveCountdown > 0) {
+          serveCountdown--;
+          if (serveCountdown === 0) {
+            launchBall();
+          }
+        } else {
+          updateBall();
+        }
       }
 
       render();
@@ -982,7 +1313,7 @@
 
       for (let i = 0; i < touches.length; i++) {
         const touch = touches[i];
-        if (touch.target === pauseToggle || touch.target === soundToggle) continue;
+        if (touch.target === pauseToggle || touch.target === soundToggle || touch.target === fullscreenToggle) continue;
 
         const canvasX = ((touch.clientX - rect.left) / rect.width) * canvas.width;
         const canvasY = ((touch.clientY - rect.top) / rect.height) * canvas.height;
@@ -1001,7 +1332,7 @@
 
     const onTouchStart = (e) => {
       if (gameState === "playing") {
-        if (e.target !== pauseToggle && e.target !== soundToggle) {
+        if (e.target !== pauseToggle && e.target !== soundToggle && e.target !== fullscreenToggle) {
           e.preventDefault();
         }
         initAudio();
@@ -1011,7 +1342,7 @@
 
     const onTouchMove = (e) => {
       if (gameState === "playing") {
-        if (e.target !== pauseToggle && e.target !== soundToggle) {
+        if (e.target !== pauseToggle && e.target !== soundToggle && e.target !== fullscreenToggle) {
           e.preventDefault();
         }
         processTouchInput(e.touches);
@@ -1038,6 +1369,27 @@
           rightPaddle.targetY = clamp(mouseY - rightPaddle.height / 2, 0, canvas.height - rightPaddle.height);
         }
       }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+        fullscreenToggle.textContent = "🗗";
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+        fullscreenToggle.textContent = "⛶";
+      }
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      fullscreenToggle.textContent = document.fullscreenElement ? "🗗" : "⛶";
+    });
+
+    fullscreenToggle.addEventListener("click", () => {
+      initAudio();
+      toggleFullscreen();
     });
 
     startBtn.addEventListener("click", () => {
@@ -1086,6 +1438,13 @@
       button.addEventListener("click", () => setDifficulty(button.dataset.difficulty));
     });
 
+    targetButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        winScore = parseInt(button.dataset.score, 10) || 11;
+        targetButtons.forEach(btn => btn.classList.toggle("active", btn === button));
+      });
+    });
+
     soundToggle.addEventListener("click", () => {
       soundEnabled = !soundEnabled;
       soundToggle.classList.toggle("muted", !soundEnabled);
@@ -1094,9 +1453,9 @@
     });
 
     updateScoreboard();
+    updateStatsDisplay();
     setGameMode("single");
     setDifficulty("medium");
-    resetBall(1);
     requestAnimationFrame(gameLoop);
   </script>
 </body>

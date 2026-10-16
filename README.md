@@ -18,18 +18,19 @@ A classic arcade-style Pong game built with HTML, CSS, and JavaScript. It includ
 
 ## Overview
 
-This game gives players a simple but polished Pong experience:
+This game gives players a fast, polished, and highly satisfying arcade Pong experience:
 
-- One-player mode against a computer opponent
-- Two-player local mode on the same device (multi-touch & keyboard support)
-- Direct touch-and-drag hand controls on smartphones and tablets (no mouse needed)
-- Mouse control for paddles on desktop
-- Keyboard controls for both players (W/S and Arrow keys)
-- Responsive layout adapting to smartphone portrait and landscape modes
-- On-screen touch buttons for pause/resume (⏸) and sound (🔊)
-- Ball trail effects and arcade neon visuals
-- Pause and restart menu flow
-- Scoreboard and win condition
+- **1-Player Mode (vs CPU):** Easy, Medium, and Hard difficulty levels
+- **2-Player Local Multiplayer:** Multi-touch support on smartphones & shared controls on desktop
+- **Direct Hand Touch & Drag:** Smooth, zero-lag finger control on mobile devices
+- **Dynamic Rally Acceleration:** Ball speed and trail length increase during intense volleys with rising audio pitch
+- **Neon Particle Sparks & Screen Shake:** Visual juice on paddle hits, wall rebounds, and goal explosions
+- **Mobile Haptic Feedback:** Vibrations on smartphone hits and score events via `navigator.vibrate`
+- **Serve Countdown & Delay:** Brief "READY... SERVE!" pause prevents cheap goals and gives players time to reposition
+- **Match Length Options:** Choose First to 5, 11, or 21 points
+- **Fullscreen Mode (⛶):** True immersive app-like experience on smartphones and desktop
+- **Persistent Stats (LocalStorage):** Tracks Best Rally streak and Win/Loss record across sessions
+- **Responsive Layout:** Beautiful in both portrait and landscape orientation on phones, tablets, and PCs
 
 ## How to Start the Game.
 
@@ -60,25 +61,20 @@ cd pong-game
 npx http-server
 ```
 
-### Option 3: Play Online via GitHub Pages
-1. Go to repository **Settings** > **Pages** on GitHub.
-2. Under **Source**, choose `Deploy from a branch` and select `main` (root).
-3. Open the published link on your mobile phone browser to play anywhere.
+### Option 3: Play Online via GitHub Pages or Render
+1. Deploy via GitHub Pages or Render Static Site.
+2. Open the link on any smartphone or browser to play instantly!
 
 ## How to Play
 
 1. Open the game in your browser or smartphone.
-2. The title screen appears.
-3. Choose your game mode:
-   - `vs CPU` for single-player against AI
-   - `2 Players` for local two-player duel on the same screen
-4. If you selected single-player, pick a difficulty:
-   - Easy
-   - Medium
-   - Hard
-5. Tap **START GAME** (or press Space / click start).
-6. Keep the ball in play and score points by making the opponent miss it.
-7. First player to 11 points wins!
+2. Choose your game mode (`vs CPU` or `2 Players`).
+3. If playing vs CPU, choose your difficulty (`Easy`, `Medium`, `Hard`).
+4. Select your **Target Score** (`5 pts`, `11 pts`, or `21 pts`).
+5. Tap **START GAME** (or press Space).
+6. Wait for the "READY... SERVE!" countdown and return the ball!
+7. Keep volleys alive to rack up your **Rally Combo** and speed up the game.
+8. First player to reach the target score wins the match!
 
 ## Controls
 
@@ -90,9 +86,10 @@ npx http-server
 | **2 Players (Local)** | Left half of screen | Player 1 paddle |
 | **2 Players (Local)** | Right half of screen | Player 2 paddle (multi-touch supported) |
 | **Any mode** | Tap ⏸ button (top-left) | Pause / Resume game |
+| **Any mode** | Tap ⛶ button (top-right) | Toggle Fullscreen (hides browser bars) |
 | **Any mode** | Tap 🔊 button (top-right) | Toggle sound effects on/off |
 
-> **Mobile Tip:** Turn your smartphone sideways (landscape) for the classic full-screen arcade experience! Accidental page scrolling, zoom, and text selection are locked during gameplay.
+> **Mobile Tip:** Turn your smartphone sideways (landscape) and tap **⛶ (Fullscreen)** for the ultimate arcade feel! Touch gestures like pull-to-refresh and zoom are completely locked during gameplay.
 
 ### 💻 Desktop Controls (Mouse & Keyboard)
 
@@ -102,8 +99,8 @@ npx http-server
 |---------|--------|
 | 🖱️ Mouse | Move cursor up / down to guide the paddle |
 | ↑ / ↓ or W / S | Move left paddle with keyboard |
-| Space | Pause or resume |
-| ⏸ button | Pause or resume |
+| Space or ⏸ button | Pause or resume |
+| ⛶ button | Toggle Fullscreen |
 | 🔊 Sound button | Toggle sound effects |
 
 #### Multiplayer Mode
@@ -118,26 +115,24 @@ npx http-server
 ## Game Modes
 
 ### 1. Single Player (vs CPU)
-
-Play against the computer.
-
-- Easy: slower reactions and more mistakes
-- Medium: balanced gameplay
-- Hard: faster reactions and sharper tracking
+Play against the computer AI:
+- **Easy:** Relaxed pace, slower reaction times, forgiving misses
+- **Medium:** Balanced competitive arcade experience
+- **Hard:** Fast tracking and sharp angles for experienced players
 
 ### 2. Local Multiplayer
-
-Two players share the same screen and keyboard.
-
-- Left player uses `W` and `S`
-- Right player uses the up and down arrow keys
+Two players share the same screen or phone:
+- Left player controls the Cyan paddle (P1 area)
+- Right player controls the Pink paddle (P2 area)
+- Multi-touch enabled: both players can touch and slide simultaneously!
 
 ## Rules and Scoring
 
 - A point is scored when the opponent misses the ball.
-- The ball bounces off the top and bottom walls.
-- The ball bounces off paddles and changes direction based on impact position.
-- The first player to reach 11 points wins the round.
+- Bounces off paddles increase the **Rally Combo** and gradually accelerate ball velocity.
+- The ball bounces off the top and bottom walls with spark effects.
+- The first player to reach the selected target score (5, 11, or 21) wins the match.
+- Personal records (Best Rally & Win/Loss record) are automatically saved to your browser.
 - A pause menu is available during gameplay.
 
 ## Screens and Navigation
